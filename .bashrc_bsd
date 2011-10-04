@@ -1,0 +1,5 @@
+# BSD specific bashrc setup
+
+# helpfully generated from http://geoff.greer.fm/lscolors/
+export LSCOLORS=gxfxcxdxbxegedabagacad
+export CLICOLOR=1
