@@ -5,6 +5,8 @@ BLUE="\[\033[01;34m\]"
 ORANGE="\e[0;33m"
 CLEAR="\e[0m"
 
+source $(dirname "$BASH_SOURCE")/git-completion.bash
+
 function parse_git_branch {
   __git_ps1 | sed 's/[()]//g'
 }
