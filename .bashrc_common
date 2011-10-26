@@ -5,9 +5,11 @@ BLUE="\[\033[01;34m\]"
 ORANGE="\e[0;33m"
 CLEAR="\e[0m"
 
+# Git completion
 source $(dirname "$BASH_SOURCE")/git-completion.bash
 
-function parse_git_branch {
+# Git status
+function git_branch {
   __git_ps1 | sed 's/[()]//g'
 }
 function git_status_marker {
@@ -17,8 +19,38 @@ function git_status_marker {
     echo ' !'
   fi
 }
+
+# Mercurial status
+hg_branch() {
+  local BRANCH=$(hg branch 2> /dev/null)
+  if [[ $BRANCH != "" ]]
+  then
+    echo " $BRANCH"
+  fi
+}
+
+hg_status_marker() {
+  local DIRTY=$(hg status 2> /dev/null | wc -l | sed 's/^ *//g')
+  if [[ $DIRTY != "0" ]]
+  then
+    echo ' !'
+  fi
+}
+
 # Color Prompt
-PS1="${debian_chroot:+($debian_chroot)}$GREEN\u@\h $BLUE\w$ORANGE\$(parse_git_branch)$RED\$(git_status_marker)$CLEAR --\r\n\$ "
+export COMMON_PROMPT="${debian_chroot:+($debian_chroot)}$GREEN\u@\h $BLUE\w"
+export NORMAL_PROMPT="$COMMON_PROMPT$CLEAR --\r\n\$ "
+
+# Git Prompt
+export GIT_PROMPT="$COMMON_PROMPT$ORANGE\$(git_branch)$RED\$(git_status_marker)$CLEAR --\r\n\$ "
+
+# Mercurial Prompt
+export HG_PROMPT="$COMMON_PROMPT$ORANGE\$(hg_branch)$RED\$(hg_status_marker)$CLEAR --\r\n\$ "
+
+PS1="$NORMAL_PROMPT"
+alias gitprompt='export PS1="$GIT_PROMPT"'
+alias hgprompt='export PS1="$HG_PROMPT"'
+alias clearprompt='export PS1="$NORMAL_PROMPT"'
 
 
 export GREP_OPTIONS='--color=auto'
