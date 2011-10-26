@@ -1,0 +1,9 @@
+[extensions]
+progress =
+graphlog =
+fetch =
+color =
+rebase =
+[alias]
+slog = log --template "\033[0;33m{node|short}\t\033[0;35m{author|user}\033[0m {desc|firstline}\n"
+
