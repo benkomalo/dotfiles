@@ -104,11 +104,13 @@ map <C-K> <C-W>k<C-W>_<C-W>j4<C-W>+<C-W>k
 map <C-h> <C-W>h<C-W>\|<C-W>l<C-W>h
 map <C-l> <C-W>l<C-W>\|<C-W>h<C-W>l
 
+nnoremap <leader>r :NERDTreeToggle<CR>
+
 "===================
 " Coding style
 "===================
 
-set shiftwidth=2 tabstop=2 softtabstop=2
+set shiftwidth=4 tabstop=4 softtabstop=4
 set expandtab
 set cindent
 
