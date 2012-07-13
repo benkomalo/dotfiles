@@ -4,6 +4,7 @@
 set nocompatible
 set encoding=utf-8
 set autoread
+set modelines=0
 
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.so
@@ -11,6 +12,7 @@ set wildignore+=*.sw?
 set wildignore+=*.DS_Store
 set wildignore+=*.pyc
 set wildignore+=*.apk,*.class,*.jar,*.zip,*.tar,*.gz
+set wildmenu
 
 source $VIMRUNTIME/mswin.vim
 
@@ -27,6 +29,8 @@ noremap k gk
 
 let mapleader = ","
 let maplocalleader = "\\"
+nnoremap ; :
+inoremap jj <esc>
 
 " Lexical autocomplete tabwrapper
 function InsertTabWrapper()
@@ -95,6 +99,13 @@ MapToggle <C-p> ignorecase
 " Clean whitespace
 map <leader>w  :s/\s\+$//<cr>:let @/=''<CR>
 
+" file regex search
+map <leader>s  :%s/
+
+" Easier bracket match
+nnoremap <tab> %
+vnoremap <tab> %
+
 "===================
 " Window management
 "===================
@@ -104,7 +115,7 @@ map <C-K> <C-W>k<C-W>_<C-W>j4<C-W>+<C-W>k
 map <C-h> <C-W>h<C-W>\|<C-W>l<C-W>h
 map <C-l> <C-W>l<C-W>\|<C-W>h<C-W>l
 
-nnoremap <leader>r :NERDTreeToggle<CR>
+nnoremap <leader>t :NERDTreeToggle<CR>
 
 "===================
 " Coding style
@@ -119,6 +130,7 @@ filetype plugin on
 " 80 col limit
 au BufNewFile,BufRead *.vimrc,*.c,*.cc,*.h,*.java,*.js,*.py match TooLong /\%>80v.\+/
 hi link TooLong Warning
+set colorcolumn=80
 
 if has("gui")
   hi Warning guifg=#ffffff guibg=#6e2e2e
@@ -135,8 +147,8 @@ command! -nargs=* -complete=file PRevert :!p4 revert %
 command! -nargs=* -complete=file PDiff :!p4 diff %
 
 " Fuzzy matcher
-"source ~/.vim/fuf/plugin/fuf.vim
-"map <C-S-r> :FufFile<cr>
+source ~/.vim/fuf/plugin/fuf.vim
+map <leader>r :FufFile<cr>
 
 " From Steve Losh (https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc):
 " Split/Join {{{
