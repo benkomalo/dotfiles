@@ -127,8 +127,11 @@ set cindent
 
 filetype plugin on
 
+" Hive pseudo-support
+au BufRead,BufNewFile *.q set filetype=sql
+
 " 80 col limit
-au BufNewFile,BufRead *.vimrc,*.c,*.cc,*.h,*.java,*.js,*.py match TooLong /\%>80v.\+/
+au BufNewFile,BufRead *.vimrc,*.c,*.cc,*.h,*.java,*.js,*.py,*.q match TooLong /\%>80v.\+/
 hi link TooLong Warning
 set colorcolumn=80
 
