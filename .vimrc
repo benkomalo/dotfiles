@@ -56,8 +56,12 @@ command -nargs=+ MapToggle  call MapToggle(<f-args>)
 " Visuals
 "===================
 
-syn on
-color torte
+syntax enable
+if !has('gui_running')
+    let g:solarized_termcolors=256
+endif
+set background=dark
+colorscheme solarized
 set nu
 set visualbell
 set showcmd
