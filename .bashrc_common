@@ -20,6 +20,9 @@ function git_status_marker {
   fi
 }
 
+# Mercurial completion
+source $(dirname "$BASH_SOURCE")/hg-completion.bash
+
 # Mercurial status
 hg_branch() {
   local BRANCH=$(hg branch 2> /dev/null)
@@ -45,7 +48,11 @@ export NORMAL_PROMPT="$COMMON_PROMPT$CLEAR --\r\n\$ "
 export GIT_PROMPT="$COMMON_PROMPT$ORANGE\$(git_branch)$RED\$(git_status_marker)$CLEAR --\r\n\$ "
 
 # Mercurial Prompt
-export HG_PROMPT="$COMMON_PROMPT$ORANGE\$(hg_branch)$RED\$(hg_status_marker)$CLEAR --\r\n\$ "
+function hg_ps1
+{
+    hg prompt "[{tags|quiet|,}] {bookmark}" 2> /dev/null
+}
+export HG_PROMPT="$COMMON_PROMPT $ORANGE\$(hg_ps1)$RED\$(hg_status_marker)$CLEAR --\r\n\$ "
 
 PS1="$NORMAL_PROMPT"
 alias gitprompt='export PS1="$GIT_PROMPT"'

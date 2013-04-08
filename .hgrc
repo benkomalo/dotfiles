@@ -1,9 +1,45 @@
 [extensions]
-progress =
-graphlog =
-fetch =
 color =
+dummy = ~/src/khan/devtools/kiln-review/review.py
+extdiff=
+fetch =
+graphlog =
+hgshelve = ~/src/hgshelve/hgshelve.py
+kilnauth = ~/src/kiln-extensions/kilnauth.py
+pager =
+progress =
+prompt = ~/src/hg-prompt/prompt.py
+purge =
 rebase =
+remotebranches = ~/src/remotebranches/hg_remotebranches.py
+
 [alias]
-slog = log --template "\033[0;33m{node|short}\t\033[0;35m{author|user}\033[0m {desc|firstline}\n"
+slog = log -G --template "\033[0;33m{node|short}\t\033[0;35m{author|user}\033[0m {desc|firstline}\n"
+snippets = !hg log --template '{rev} {desc|firstline|strip}\n' -r "sort(user('$(hg showconfig ui.username | sed 's/.*<\(.*\)>/\1/')') and date(-7), -date)"
+nudge = push --rev .
+
+[diff]
+git = True
+
+[auth]
+kiln.prefix=https://khanacademy.kilnhg.com
+
+[hooks]
+pretxncommit.khanlint = ~/src/khan/devtools/khan-linter/hghook.py
+
+[extdiff]
+cmd.opendiff = /Users/benkomalo/bin/hg-opendiff
+
+[web]
+cacerts = /etc/hg-dummy-cert.pem
+
+[bookmarks]
+track.current = True
+
+[pager]
+pager = LESS='FSRX' less
+
+# Pipe to less the output of the following commands.
+# Can be temporarily disabled with --pager=off
+attend = annotate, cat, diff, export, glog, log, qdiff, slog, dlog, gslog, sglog, df, nlog, lg, lga
 

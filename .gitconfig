@@ -42,5 +42,5 @@
   # Detect renames as well as copies
   renames = copies
 
-  # Meld
+  # Meld or opendiff
   external = gitmdiff
