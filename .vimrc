@@ -14,8 +14,6 @@ set wildignore+=*.pyc
 set wildignore+=*.apk,*.class,*.jar,*.zip,*.tar,*.gz
 set wildmenu
 
-source $VIMRUNTIME/mswin.vim
-
 " Disable useless manual lookup
 nnoremap K <nop>
 
