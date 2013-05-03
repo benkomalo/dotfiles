@@ -49,6 +49,9 @@ function MapToggle(key, opt)
 endfunction
 command -nargs=+ MapToggle  call MapToggle(<f-args>)
 
+" Install plugins!
+call pathogen#infect()
+
 "===================
 " Visuals
 "===================
@@ -152,7 +155,6 @@ command! -nargs=* -complete=file PDiff :!p4 diff %
 
 " Fuzzy matcher
 let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-source ~/.vim/fuf/plugin/fuf.vim
 map <leader>r :FufFile<cr>
 
 " From Steve Losh (https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc):
