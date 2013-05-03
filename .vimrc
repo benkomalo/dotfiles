@@ -153,9 +153,10 @@ command! -nargs=* -complete=file PEdit :!p4 edit %
 command! -nargs=* -complete=file PRevert :!p4 revert %
 command! -nargs=* -complete=file PDiff :!p4 diff %
 
-" Fuzzy matcher
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-map <leader>r :FufFile<cr>
+" CtrlP
+let g:ctrlp_match_window_bottom = 0
+let g:ctrlp_max_height = 30
+map <leader>r :CtrlP<cr>
 
 " From Steve Losh (https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc):
 " Split/Join {{{
