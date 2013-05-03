@@ -68,6 +68,8 @@ set showcmd
 set showmode
 set ruler
 
+let g:syntastic_python_checkers=['pyflakes']
+
 " show trailing spaces in yellow.
 set list
 set listchars=tab:\ \ ,trail:\ ,extends:»,precedes:«
