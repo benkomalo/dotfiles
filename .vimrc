@@ -28,7 +28,6 @@ noremap k gk
 let mapleader = ","
 let maplocalleader = "\\"
 nnoremap ; :
-inoremap jj <esc>
 
 " Lexical autocomplete tabwrapper
 function InsertTabWrapper()
@@ -152,6 +151,7 @@ command! -nargs=* -complete=file PRevert :!p4 revert %
 command! -nargs=* -complete=file PDiff :!p4 diff %
 
 " Fuzzy matcher
+let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 source ~/.vim/fuf/plugin/fuf.vim
 map <leader>r :FufFile<cr>
 

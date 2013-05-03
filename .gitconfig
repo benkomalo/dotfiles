@@ -15,21 +15,27 @@
 [branch]
   # auto-adds the --track flag to git branch. Helps out arc (for Phabricator).
   autosetupmerge = always
+  autosetuprebase = always
 
 [alias]
   graph = log --graph --decorate --oneline --pretty=format:"%h%x20%Cgreen%d%x20%Cred%an%x20%Cblue%ad%x20%Creset%s" --all --full-history --date=short
   ls-ignored = ls-files --exclude-standard --ignored --others
-  co = checkout
-  st = status
-  ci = commit
+  st = status --short --branch
   br = branch
   df = diff
   dfs = diff --staged
   qdiff = diff --no-ext-diff
   lp = log -p
+  snippets = !sh -c 'git log --oneline --author=benkomalo --since=`date -v-mon '+%Y/%m/%d'`'
+  out = !git fetch && git log @{u}..HEAD
+  in = !git fetch && git log HEAD..@{u}
+  nuke = !git reset --hard && git submodule update --recursive
 
   # Ignore whitespace changes
   bw = blame -w
+
+  # Auto update submodules
+  co = "!f() { git checkout $* && git submodule update --init --recursive; }; f"
 
 [merge]
   # Always show a diffstat at the end of a merge
@@ -44,3 +50,6 @@
 
   # Meld or opendiff
   external = gitmdiff
+
+[init]
+  templatedir = ~/.git_template
