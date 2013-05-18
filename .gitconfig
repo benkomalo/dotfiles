@@ -30,6 +30,8 @@
   out = !git fetch && git log @{u}..HEAD
   in = !git fetch && git log HEAD..@{u}
   nuke = !git reset --hard && git submodule update --recursive
+  sup = submodule update --recursive
+  ff = !git merge --ff-only && git submodule update --recursive
 
   # Ignore whitespace changes
   bw = blame -w
