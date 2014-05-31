@@ -128,6 +128,20 @@ nnoremap <leader>t :NERDTreeToggle<CR>
 "===================
 
 set shiftwidth=4 tabstop=4 softtabstop=4
+
+let g:indent = '4'
+function ToggleTab()
+    if g:indent == '4'
+        set shiftwidth=2 tabstop=2 softtabstop=2
+        echo "Using 2 space indent"
+        let g:indent = '2'
+    else
+        set shiftwidth=4 tabstop=4 softtabstop=4
+        echo "Using 4 space indent"
+        let g:indent = '4'
+    endif
+endfunction
+map <leader>e :exec ToggleTab()<cr><cr>
 set expandtab
 set cindent
 
