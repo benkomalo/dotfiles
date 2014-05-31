@@ -9,34 +9,48 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "
 "============================================================================
+
 if exists("g:loaded_syntastic_ruby_jruby_checker")
     finish
 endif
-let g:loaded_syntastic_ruby_jruby_checker=1
+let g:loaded_syntastic_ruby_jruby_checker = 1
 
-function! SyntaxCheckers_ruby_jruby_IsAvailable()
-    return executable('jruby')
-endfunction
+let s:save_cpo = &cpo
+set cpo&vim
 
-function! SyntaxCheckers_ruby_jruby_GetLocList()
-    let makeprg = syntastic#makeprg#build({
-                \ 'exe': s:exe(),
-                \ 'args': s:args(),
-                \ 'subchecker': 'jruby' })
+function! SyntaxCheckers_ruby_jruby_GetLocList() dict
+    if syntastic#util#isRunningWindows()
+        let exe = self.getExecEscaped()
+        let args = '-T1'
+    else
+        let exe = 'RUBYOPT= ' . self.getExecEscaped()
+        let args = ''
+    endif
 
-    let errorformat =  '%-GSyntax OK for %f,%ESyntaxError in %f:%l: syntax error\, %m,%Z%p^,%W%f:%l: warning: %m,%Z%p^,%W%f:%l: %m,%-C%.%#'
+    let makeprg = self.makeprgBuild({
+        \ 'exe': exe,
+        \ 'args': args,
+        \ 'args_after': '-W1 -c' })
 
-    return SyntasticMake({ 'makeprg': makeprg, 'errorformat': errorformat })
-endfunction
+    let errorformat =
+        \ '%-GSyntax OK for %f,'.
+        \ '%ESyntaxError in %f:%l: syntax error\, %m,'.
+        \ '%Z%p^,'.
+        \ '%W%f:%l: warning: %m,'.
+        \ '%Z%p^,'.
+        \ '%W%f:%l: %m,'.
+        \ '%-C%.%#'
 
-function s:args()
-    return has('win32') ? '-W1 -T1 -c' : '-W1 -c'
-endfunction
-
-function s:exe()
-    return has('win32') ? 'jruby' : 'RUBYOPT= jruby'
+    return SyntasticMake({
+        \ 'makeprg': makeprg,
+        \ 'errorformat': errorformat })
 endfunction
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'ruby',
     \ 'name': 'jruby'})
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: set et sts=4 sw=4:
