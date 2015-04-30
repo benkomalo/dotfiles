@@ -66,3 +66,8 @@ export GREP_OPTIONS='--color=auto'
 export EDITOR=vim
 
 export PATH=$PATH:$HOME/bin
+
+
+# adb related stuff
+alias adbw='adb forward tcp:4444 localabstract:/adb-hub && adb connect localhost:4444 && sleep 1 && adb devices'
+alias adbr='adb kill-server && sleep 2 && adb devices'
