@@ -122,7 +122,14 @@ map <C-K> <C-W>k<C-W>_<C-W>j4<C-W>+<C-W>k
 map <C-h> <C-W>h<C-W>\|<C-W>l<C-W>h
 map <C-l> <C-W>l<C-W>\|<C-W>h<C-W>l
 
+let NERDTreeIgnore = ['\.pyc$']
 nnoremap <leader>t :NERDTreeToggle<CR>
+
+" Requires `brew install ctags-exuberant`
+let g:tagbar_ctags_bin="/usr/local/Cellar/ctags/5.8/bin/ctags"
+" Requires https://github.com/mozilla/doctorjs (make install)
+"let g:tagbar_type_javascript = {'ctagsbin' : '/usr/local/bin/jsctags'}
+nnoremap <leader>g :TagbarToggle<CR>
 
 "===================
 " Coding style
@@ -144,7 +151,11 @@ function ToggleTab()
 endfunction
 map <leader>e :exec ToggleTab()<cr><cr>
 set expandtab
+
 set cindent
+" Prevent object literals in JS from being on column 0
+" http://stackoverflow.com/questions/4321372/how-to-stop-vim-moving-javascript-object-keys-to-column-0
+set cinkeys-=:
 
 filetype plugin on
 
@@ -173,6 +184,7 @@ command! -nargs=* -complete=file PDiff :!p4 diff %
 " Fuzzy matcher
 let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
 map <leader>r :FufFile<cr>
+map <leader>f :FufRenewCache<cr>
 
 " From Steve Losh (https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc):
 " Split/Join {{{

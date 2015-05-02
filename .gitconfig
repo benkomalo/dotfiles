@@ -1,6 +1,7 @@
 [core]
   # Global .gitignore file
-  excludesfile = ~/.gitignore_global
+	excludesfile = /Users/benkomalo/.gitignore_global
+	autocrlf = input
 
 [user]
   name = Ben Komalo
