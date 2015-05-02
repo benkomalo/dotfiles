@@ -39,8 +39,21 @@
   # Auto update submodules
   co = "!f() { git checkout $* && git submodule update --init --recursive; }; f"
 
-  # Open a phabricator URL if available
-  phab = "!f() { url=$(git log -1 $1 | grep -o 'http.*D[0-9]*') ; if [ -z $url ] ; then echo No phab url ; return ; fi ; echo Opening $url; open $url; }; f"
+  # Open a phabricator URL if available (note: xdg-open is for linux and
+  # open is OS-X). This just parses the commit message of the specified SHA
+  # for a phabricator URL. If no commit SHA is explicitly specified, this uses
+  # HEAD, and will also look backwards using `arc which` to see if any
+  # phabricator URLs can be found in the recent history according to `arc`.
+  phab = "!f() { \
+        url=`git log -n1 $1 | sed -n 's/^ *Differential Revision: *//p' `; \
+        if [ -z \"$url\" ] && [ -z \"$1\" ]; then \n\
+            diff=`arc which | grep -o '^ *D\\d*'`; \
+            url=`echo $diff | sed 's/^ *\\(D\\d*\\)/http:\\/\\/phabricator.khanacademy.org\\/\\1/'`; \
+        fi \n\
+        [ -z "$url" ] && echo "No phabricator url detected." || { \
+            echo \"Opening $url\"; \
+            xdg-open "$url" > /dev/null 2>&1 || open "$url"; } \
+        }; f"
 
 [merge]
   # Always show a diffstat at the end of a merge
