@@ -24,7 +24,7 @@
   comit = commit
   nothave = ls-files --exclude-standard --ignored --others
   st = status --short --branch
-  br = branch
+  br = "!f() { git branch -vv $* | git_branch_formatter.py; }; f"
   df = diff
   qdiff = diff --no-ext-diff
   dd = difftool --dir-diff
@@ -32,6 +32,9 @@
   nuke = !git reset --hard && git submodule update --recursive
   sup = submodule update --recursive
   ff = merge --ff-only
+
+  # Set upstream and rebase
+  sur = "!f() { git branch --set-upstream-to=$1 && git rebase -i $1; }; f"
 
   # Ignore whitespace changes
   bw = blame -w
@@ -69,10 +72,14 @@
   renames = copies
 
   # Meld or opendiff
-  external = gitmdiff
+#external = /Applications/SourceTree.app/Contents/MacOS/SourceTree
 
 [init]
   templatedir = ~/.git_template
 
 [push]
   default = simple
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
