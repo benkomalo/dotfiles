@@ -61,6 +61,7 @@ alias gitprompt='export PS1="$GIT_PROMPT"'
 alias hgprompt='export PS1="$HG_PROMPT"'
 alias clearprompt='export PS1="$NORMAL_PROMPT"'
 
+alias adbr='adb kill-server && sleep 1 && adb devices'
 
 export GREP_OPTIONS='--color=auto'
 export EDITOR=vim
