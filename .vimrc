@@ -68,7 +68,7 @@ set showcmd
 set showmode
 set ruler
 
-let g:syntastic_javascript_checkers=['jsxhint']
+let g:syntastic_javascript_checkers=['eslint']
 let g:syntastic_python_checkers=['pyflakes']
 
 " show trailing spaces in yellow.
@@ -252,3 +252,6 @@ function! s:HgDiff()
 endf
 command! -nargs=0 HgDiff call s:HgDiff()
 nnoremap <leader>hd :HgDiff<cr>
+
+" Git grep using navigation with Ggr
+command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
