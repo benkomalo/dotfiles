@@ -16,3 +16,6 @@
 [submodule ".vim/bundle/l9"]
 	path = .vim/bundle/l9
 	url = https://github.com/eparreno/vim-l9
+[submodule ".vim/bundle/fzf.vim"]
+	path = .vim/bundle/fzf.vim
+	url = https://github.com/junegunn/fzf.vim

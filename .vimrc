@@ -182,9 +182,9 @@ command! -nargs=* -complete=file PRevert :!p4 revert %
 command! -nargs=* -complete=file PDiff :!p4 diff %
 
 " Fuzzy matcher
-let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
-map <leader>r :FufFile<cr>
-map <leader>f :FufRenewCache<cr>
+"let g:fuf_file_exclude = '\v\~$|\.(o|exe|dll|bak|orig|rej|handlebars\.js|sw[po])$|(^|[/\\])\.(hg|git|bzr)($|[/\\])'
+"map <leader>r :FufFile<cr>
+"map <leader>f :FufRenewCache<cr>
 
 " From Steve Losh (https://bitbucket.org/sjl/dotfiles/src/tip/vim/.vimrc):
 " Split/Join {{{
@@ -255,3 +255,22 @@ nnoremap <leader>hd :HgDiff<cr>
 
 " Git grep using navigation with Ggr
 command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
+
+" ----------------------------------------------------------------------------
+" fzf
+" ----------------------------------------------------------------------------
+set rtp+=~/.fzf
+nnoremap <silent> <Leader>r :FZF -m<CR>
+
+"function! BufList()
+  "redir => ls
+  "silent ls
+  "redir END
+  "return split(ls, '\n')
+"endfunction
+
+"function! BufOpen(e)
+  "execute 'buffer '. matchstr(a:e, '^[ 0-9]*')
+"endfunction
+
+
