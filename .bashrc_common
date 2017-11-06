@@ -67,9 +67,10 @@ export GREP_OPTIONS='--color=auto'
 export EDITOR=vim
 
 export PATH=$PATH:$HOME/bin
-export PATH="$HOME/.yarn/bin:$PATH"
-
 
 # adb related stuff
 alias adbw='adb forward tcp:4444 localabstract:/adb-hub && adb connect 127.0.0.1:4444 && sleep 1 && adb devices'
 alias adbr='adb kill-server && sleep 2 && adb devices'
+alias adbrn='adb reverse tcp:8081 tcp:8081'
+
+export FZF_DEFAULT_COMMAND='ag -g ""'
