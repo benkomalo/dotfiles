@@ -1,7 +1,7 @@
 [core]
   # Global .gitignore file
-	excludesfile = /Users/benkomalo/.gitignore_global
-	autocrlf = input
+  excludesfile = /Users/benkomalo/.gitignore_global
+  autocrlf = input
 
 [user]
   name = Ben Komalo
@@ -32,9 +32,11 @@
   nuke = !git reset --hard && git submodule update --recursive
   sup = submodule update --recursive
   ff = merge --ff-only
+  cane = commit -a --amend --no-edit
 
   # Set upstream and rebase
-  sur = "!f() { git branch --set-upstream-to=$1 && git rebase -i $1; }; f"
+  sur = "!f() { git branch --set-upstream-to=$1 && git upd; }; f"
+  upd = "!f() { git rebase --onto '@{u}' HEAD^ $(git symbolic-ref --short HEAD); }; f"
 
   # Ignore whitespace changes
   bw = blame -w
@@ -74,12 +76,20 @@
   # Meld or opendiff
 #external = /Applications/SourceTree.app/Contents/MacOS/SourceTree
 
-[init]
-  templatedir = ~/.git_template
+#[init]
+#templatedir = ~/.git_template
 
 [push]
   default = simple
-[filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+
+[filter "bigfile"]
+  clean = git-bigfile filter-clean
+  smudge = git-bigfile filter-smudge
+
+[git-bigfile]
+  transport = s3
+
+[git-bigfile "s3"]
+  access-key = AKIAINDGZSNJIWXDPTSA
+  secret-key-path = ~/git-bigfile-storage.secret
+  bucket-name = git-bigfile-storage
