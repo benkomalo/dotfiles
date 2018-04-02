@@ -8,12 +8,14 @@ branch_dict = {}
 # Read raw branch information.
 for line in sys.stdin.readlines():
     line = line.strip()
-    name, rest = re.split(r'\s*', line, maxsplit=1)
+    if not line:
+        continue
+    name, rest = re.split(r'\s+', line, maxsplit=1)
     if name == '*':
-        name, rest = re.split(r'\s*', rest, maxsplit=1)
+        name, rest = re.split(r'\s+', rest, maxsplit=1)
         cur_branch = name
 
-    sha, rest = re.split(' ', rest, maxsplit=1)
+    sha, rest = re.split(r' ', rest, maxsplit=1)
     upstream_info = re.match('(\[[^\]]+] ).*', rest)
     if upstream_info:
         parts = re.split(r': |, ', upstream_info.groups()[0][1:-2])
@@ -115,7 +117,7 @@ def print_formatted(node, pad_to):
         name = '%s%s%s' % (GREEN, node['name'], ENDC)
     else:
         name = node['name']
-    print name,
+    print(' ' + name, end='')
     pad_to = pad_to - len(node['name']) - 1
 
     upstream_info = node['upstream']
@@ -139,33 +141,34 @@ def print_formatted(node, pad_to):
             upstream_msg = '[%sahead: %d, behind: %d%s]' % (RED, ahead, behind, ENDC)
 
         pad_to = pad_to - len_without_color(upstream_msg) - 1
-        print upstream_msg,
+        print(' ' + upstream_msg, end='')
 
     if pad_to < 1:
         pad_to = 1
-    print '%s(%s) %s' % (' ' * pad_to, node['sha'], node['desc']),
+    print('%s(%s) %s' % (' ' * pad_to, node['sha'], node['desc']), end='')
 
 
 def print_branch(node, level=0):
     if level == 0:
-        print  # Top level - print an extra line
+        print() # Top level - print an extra line
 
     width = 45
     if level > 1:
-        prefix = '  '.join(' ' for _ in xrange(level - 1))
+        prefix = '  '.join(' ' for _ in range(level - 1))
         width = width - len(prefix) - 1
-        print prefix,
+        print(prefix, end='')
     if level > 0:
-        print '+',
+        print('+', end='')
         width = width - 2
 
     if node['children']:
-        print u'\u00AC',
+        print(u'\u00AC', end='')
     else:
-        print '-',
-    print_formatted(node, pad_to=width)
+        print('-', end='')
 
-    print
+    print_formatted(node, pad_to=width)
+    print()
+
     for child in node['children']:
         print_branch(child, level + 1)
 
@@ -173,4 +176,4 @@ def print_branch(node, level=0):
 for branch in top_level_nodes.values():
     print_branch(branch, level=0)
 
-print
+print()
