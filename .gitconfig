@@ -81,15 +81,9 @@
 
 [push]
   default = simple
-
-[filter "bigfile"]
-  clean = git-bigfile filter-clean
-  smudge = git-bigfile filter-smudge
-
-[git-bigfile]
-  transport = s3
-
-[git-bigfile "s3"]
-  access-key = AKIAINDGZSNJIWXDPTSA
-  secret-key-path = ~/git-bigfile-storage.secret
-  bucket-name = git-bigfile-storage
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[pull]
+	rebase = true
