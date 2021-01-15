@@ -33,6 +33,7 @@
   sup = submodule update --recursive
   ff = merge --ff-only
   cane = commit -a --amend --no-edit
+  lpurge = "!f() { git remote prune origin | grep -o origin/benkomalo/.* | grep -o benkomalo/.* | xargs git branch -D; }; f"
 
   # Set upstream and rebase
   sur = "!f() { git branch --set-upstream-to=$1 && git upd; }; f"
